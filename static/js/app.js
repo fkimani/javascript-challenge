@@ -1,6 +1,7 @@
 // from data.js
 var tableData = data;
-var submit = d3.select("#filter-btn");
+// var submit = d3.select("#filter-btn");
+var submit = d3.select("button");
 
 // console.log(tableData)
 
@@ -25,11 +26,18 @@ tableData.forEach(function(ufoData){
     
 });
 
+    // //try replace tableData with filterData
+    // tbody.selectAll("td").selectAll("td")
+    // .data(tableData)
+    // .remove()   
+
 
 // Filter date input
-//event handler
-submit.on("click", function(){
+// event handler when filter button is clicked
+submit.on("click", handleClick);
 
+//click handler
+function handleClick(){
     //prevent default
     d3.event.preventDefault();
 
@@ -45,13 +53,15 @@ submit.on("click", function(){
     var filterData = tableData.filter(tableData => tableData.datetime === inputValue);
     console.log(filterData);
 
+    tableData.remove()
+    
     //now add the filtered data to the table body
     // loop through data and print each object
-    filterData.forEach(function(ufoData){
+    filterData.forEach(function(newData){
         // add table row
         var row = tbody.append("tr");
         
-        Object.entries(ufoData).forEach(function([key,value]){
+        Object.entries(newData).forEach(function([key,value]){
             // console.log(key,value);//comment for now
 
             // add table data
@@ -59,18 +69,21 @@ submit.on("click", function(){
 
             //add data values to the table rows
             cell.text(value);
-            // console.log(key,value);
+            console.log(key,value);
         });
-        
     });
-    
-    //try remove existing table first
-    d3.selectAll("tr")
-    .data(filterData)
-    .selectAll("td")
-    .exit()
-    .remove();
-
-});
+};
 
 
+
+
+
+
+// // later
+// function name(d) {
+//     return d;
+//   }
+// d3.selectAll("div").data(tableData, name);
+// var div = d3.selectAll("div").data(filterData, name);
+// div.exit();
+// div.enter();
