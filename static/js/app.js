@@ -8,31 +8,28 @@ var submit = d3.select("button");
 // us d3 to select table body
 var tbody = d3.select("table");
 
-// loop through data and print each object
-tableData.forEach(function(ufoData){
-    // add table row
-    var row = tbody.append("tr");
+// function to add data
+function addData(tdata){
+    tdata.forEach(function(data){
+        // add table row
+        var row = tbody.append("tr");
+        
+        Object.entries(data).forEach(function([key,value]){
     
-    Object.entries(ufoData).forEach(function([key,value]){
-        // console.log(key,value);//comment for now
-
-        // add table data
-        var cell = tbody.append("td");
-
-        //add data values to the table rows
-        cell.text(value);
-        // console.log(key,value);
+            // add table data
+            var cell = tbody.append("td");
+    
+            //add data values to the table rows
+            cell.text(value);
+            // console.log(key,value);
+        });
+        
     });
-    
-});
+};
 
-    // //try replace tableData with filterData
-    // tbody.selectAll("td").selectAll("td")
-    // .data(tableData)
-    // .remove()   
+// call function and add data to table
+addData(tableData);
 
-
-// Filter date input
 // event handler when filter button is clicked
 submit.on("click", handleClick);
 
@@ -44,8 +41,8 @@ function handleClick(){
     //select input form element
     var inputElement = d3.select("#datetime");
 
-    //Get value property of the input element
-    var inputValue = inputElement.property("value");
+    //Get value property of the input element and trim it
+    var inputValue = inputElement.property("value").trim();
     console.log(inputValue);
     
 
@@ -53,37 +50,9 @@ function handleClick(){
     var filterData = tableData.filter(tableData => tableData.datetime === inputValue);
     console.log(filterData);
 
-    tableData.remove()
+    // clear existing tabledata
+    tbody.html("")
     
     //now add the filtered data to the table body
-    // loop through data and print each object
-    filterData.forEach(function(newData){
-        // add table row
-        var row = tbody.append("tr");
-        
-        Object.entries(newData).forEach(function([key,value]){
-            // console.log(key,value);//comment for now
-
-            // add table data
-            var cell = tbody.append("td");
-
-            //add data values to the table rows
-            cell.text(value);
-            console.log(key,value);
-        });
-    });
+    addData(filterData);
 };
-
-
-
-
-
-
-// // later
-// function name(d) {
-//     return d;
-//   }
-// d3.selectAll("div").data(tableData, name);
-// var div = d3.selectAll("div").data(filterData, name);
-// div.exit();
-// div.enter();
