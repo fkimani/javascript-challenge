@@ -3,7 +3,13 @@ var tableData = data;
 // var submit = d3.select("#filter-btn");
 var submit = d3.select("button");
 
-// console.log(tableData)
+//select input form element
+var inputDate = d3.select("#datetime");
+var inputCity = d3.select("#city");
+var inputState = d3.select("#state");
+var inputCountry = d3.select("#country");
+var inputShape = d3.select("#shape");
+
 
 // us d3 to select table body
 var tbody = d3.select("table");
@@ -38,16 +44,29 @@ function handleClick(){
     //prevent default
     d3.event.preventDefault();
 
-    //select input form element
-    var inputElement = d3.select("#datetime");
+    // //select input form element
+    // var inputDate = d3.select("#datetime");
 
     //Get value property of the input element and trim it
-    var inputValue = inputElement.property("value").trim();
-    console.log(inputValue);
+    // input values
+    var inputDateValue = inputDate.property("value").trim();
+    var inputCityValue = inputCity.property("value").trim();
+    var inputStateValue = inputState.property("value").trim();
+    var inputCountryValue = inputCountry.property("value").trim();
+    var inputShapeValue = inputShape.property("value").trim();
+
+    var inputData = [
+    inputDateValue,
+    inputCityValue,
+    inputStateValue,
+    inputCountryValue,
+    inputShapeValue
+    ]
+    console.log("here: " ,inputData);
     
 
     // use form input to filter data by datetime
-    var filterData = tableData.filter(tableData => tableData.datetime === inputValue);
+    var filterData = tableData.filter(tableData => tableData.datetime === inputDateValue);
     console.log(filterData);
 
     // clear existing tabledata
