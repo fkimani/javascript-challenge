@@ -62,11 +62,19 @@ function handleClick(){
     inputCountryValue,
     inputShapeValue
     ]
-    console.log("here: " ,inputData);
+    console.log("inputData: " ,inputData);
     
 
     // use form input to filter data by datetime
-    var filterData = tableData.filter(tableData => tableData.datetime === inputDateValue);
+    // var filterData = tableData.filter(tableData => tableData.datetime === inputDateValue);
+    
+    //filter for all form inputs
+    const filterItems = (arr, query) => {
+        return arr.filter(el => el.datetime === inputDateValue)
+      }
+      
+    console.log(filterItems(tableData, inputDateValue))  // input date value test
+    console.log(filterItems(tableData, inputData[1]))  // inputCityValue
     console.log(filterData);
 
     // clear existing tabledata
